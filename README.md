@@ -23,16 +23,15 @@ The vuled8.* and adcmux.* files can be integrated into an application but a work
 This particular sketch uses "bar" mode to indicate the level as well as a "dot" mode to hold the peak of the level (currently hardcoded at 4000 samples which is ~420 ms).
 This sketch also reads from one potentiometer that cycles the VU meter behavior between states:
 
-```off
-  0 dBu ref bar
-  0 dBu ref bar w/ peak hold dot
-off
- +4 dBu ref bar
- +4 dBu ref bar w/ peak hold dot
-off
-+12 dBu ref bar
-+12 dBu ref bar w/ peak hold dot
-```
+    off
+      0 dBu ref bar
+      0 dBu ref bar w/ peak hold dot
+    off
+     +4 dBu ref bar
+     +4 dBu ref bar w/ peak hold dot
+    off
+    +12 dBu ref bar
+    +12 dBu ref bar w/ peak hold dot
 
 ### Input Circuit
 
@@ -46,14 +45,13 @@ Aside from using Free Running and High Speed modes (see also Infrequently Switch
 
 The desired behavior is specified with a `struct adcmux_chan` array. Consider the following example:
 
-```struct adcmux_chan chans[5] = {
-	{ 0, 1 },   // VU meter
-	{ 1, 50 },  // gain reduction circuit
-	{ 4, 400 }, // potentiometer 0
-	{ 2, 400 }, // potentiometer 1
-	{ 6, 400 }, // potentiometer 2
-};
-```
+    struct adcmux_chan chans[5] = {
+    	{ 0, 1 },   // VU meter
+    	{ 1, 50 },  // gain reduction circuit
+    	{ 4, 400 }, // potentiometer 0
+    	{ 2, 400 }, // potentiometer 1
+    	{ 6, 400 }, // potentiometer 2
+    };
 
 The above example means that 1 in 1 samples will be read from pin 0, 1 in 50 samples will be read from pin 1 and 1 in every 400 samples will be read from pins 4, 2 and 6. Of course these ratios are not exact. The ratio value is actually a modulus that is compared to a sample count. So when count % modu == 0 one or more subsequent samples will be diverted to other pins. Meaning there will be gaps in the data. So in this example, the channel for pin 0 will actually only get 389 of 400 samples (11 in 400 samples will go to other pins).
 
