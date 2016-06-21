@@ -63,14 +63,14 @@ Serial.println(pavg);
 		if (ctime > pot0_last_time + POT0_PERIOD) {
 			pot0_last_time = ctime;
 
-			int pot0 = pavg / 114; // 9 segments
+			int pot0 = pavg / 85; // 12 segments
 
 			if (pot0 != last_pot0) {
 				last_pot0 = pot0;
 
 				int vuref = pot0 / 3 + 1;
 
-				if (pot0 == 0 || pot0 == 3 || pot0 == 6)
+				if (pot0 == 0 || pot0 == 3 || pot0 == 6 || pot0 == 9)
 					vuref = 0; // VU off
 
 				vuled8_set_thresh_ref(&vu0, vuref);
@@ -87,7 +87,7 @@ Serial.println(pavg);
 
 		if (use_peak_dot)
 			vuled8_set_bits(&vu0, &ledbits, vu0.hold, VULED8_MODE_DOT);
-		vuled8_set_bits(&vu0, &ledbits, vu0.avg, VULED8_MODE_BAR);
+		vuled8_set_bits(&vu0, &ledbits, vu0.rval, VULED8_MODE_BAR);
 
 		digitalWrite(SS, LOW);
 

@@ -6,16 +6,16 @@ extern "C" {
 #define VULED8_MODE_BAR 2
 
 struct vuled8 {
-	uint32_t peak;
-	uint32_t avg0;
-	uint32_t avg;
+	int32_t dmate;
+	int32_t dmate_count;
+	int32_t v0;
+	int32_t v1;
+	int32_t v2;
+	uint32_t rval;
 	uint32_t hold;
-	uint16_t decay_rate;
-	uint16_t avg_size;
-	uint16_t hold_count;
 	uint16_t hold_decr;
 	uint16_t srate;
-	uint32_t thresh[8];
+	uint32_t amult;
 };
 
 int
